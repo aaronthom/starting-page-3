@@ -13,14 +13,14 @@
         <button type="submit" class="search-button">Search</button>
       </form>
       <div class="icon-links">
-        <a href="https://www.youtube.com" target="_blank">
-          
+        <a href="https://www.youtube.com" target="_blank"> 
+          YouTube
         </a>
         <a href="https://www.netflix.com" target="_blank">
-          <
+          Netflix
         </a>
         <a href="https://www.amazon.com" target="_blank">
-        
+          Amazon
         </a>
       </div>
     </div>
@@ -94,7 +94,7 @@ onMounted(() => {
 }
 
 h1 {
-  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: 28px;
   font-style: italic;
   font-weight: 400;
@@ -137,6 +137,7 @@ h1 {
   display: flex;
   justify-content: center;
   margin-top: 20px;
+  gap: 40px;
 }
 
 .icon {
