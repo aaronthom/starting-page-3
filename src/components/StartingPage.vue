@@ -110,7 +110,7 @@ h1 {
   width: 600px;
   padding: 10px;
   font-size: 16px;
-  border: 1px solid #ccc;
+  border: 1px solid #cccccc42;
   background-color: #ffffff18;
   border-radius: 20px 0 0 0;
   outline: none;
@@ -120,7 +120,7 @@ h1 {
 .search-button {
   padding: 10px 20px;
   font-size: 16px;
-  border: 1px solid #ccc;
+  border: 1px solid #cccccc42;
   border-left: none;
   border-radius: 0 0 20px 0;
   background-color: hsl(209, 71%, 43%);
@@ -138,6 +138,7 @@ h1 {
   justify-content: center;
   margin-top: 20px;
   gap: 40px;
+  margin-bottom: 200px;
 }
 
 .icon {
