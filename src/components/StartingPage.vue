@@ -5,9 +5,9 @@
     </video>
     <div class="content">
       <div class="clock">{{ time }}</div>
-      <h1 v-if="greeting === 'morning'">Good morning!</h1>
-      <h1 v-if="greeting === 'afternoon'">Good afternoon!</h1>
-      <h1 v-if="greeting === 'evening'">Good evening!</h1>
+      <h1 v-if="greeting === 'morning'">Good morning, Aaron!</h1>
+      <h1 v-if="greeting === 'afternoon'">Good afternoon, Aaron!</h1>
+      <h1 v-if="greeting === 'evening'">Good evening, Aaron!</h1>
       <form class="search-form" @submit.prevent="searchGoogle">
         <input type="text" v-model="query" placeholder="Search Google..." class="search-input" />
         <button type="submit" class="search-button">Search</button>
