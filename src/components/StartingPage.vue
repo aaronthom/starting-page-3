@@ -4,6 +4,7 @@
       <source src="../assets/video/ocean-uhd.mp4" type="video/mp4">
     </video>
     <div class="content">
+      <div class="date">{{ date }}</div>
       <div class="clock">{{ time }}</div>
       <h1 v-if="greeting === 'morning'">"Good morning!"</h1>
       <h1 v-if="greeting === 'afternoon'">"Good afternoon!"</h1>
@@ -19,18 +20,21 @@
         <a href="https://www.github.com" target="_blank">
           <img src="..\assets\images\github-logo-1000x1000.png">
         </a>
+        <a href="https://stackoverflow.com/" target="_blank">
+          <img src="..\assets\images\stackoverflow-logo-1000x1000.png">
+        </a>
         <a href="https://www.netflix.com" target="_blank">
           <img src="..\assets\images\netflix-logo-1000x1000.png">
+        </a>
+        <a href="https://www.chatgpt.com" target="_blank">
+          <img src="..\assets\images\chatgpt-logo-1000x1000.png">
         </a>
         <a href="https://www.youtube.com" target="_blank">
           <img src="..\assets\images\youtube-logo-1000x1000.png">
         </a>
-
         <a href="https://www.amazon.com" target="_blank">
           <img src="..\assets\images\amazon-logo-1000x1000.png">
         </a>
-
-
       </div>
     </div>
   </div>
@@ -41,11 +45,13 @@ import { ref, onMounted } from 'vue';
 
 const query = ref('');
 const time = ref('');
+const date = ref('');
 const greeting = ref('');
 
 const updateTime = () => {
   const now = new Date();
   time.value = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  date.value = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
   const hours = now.getHours();
   if (hours >= 5 && hours < 12) {
@@ -96,6 +102,13 @@ onMounted(() => {
   color: white;
 }
 
+.date {
+  font-size: 20px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
 .clock {
   font-size: 58px;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -119,7 +132,7 @@ h1 {
   width: 600px;
   padding: 10px;
   font-size: 16px;
-  border: 1px solid #cccccc42;
+  border: 1px solid #cccccc23;
   background-color: #ffffff18;
   border-radius: 20px 0 0 0;
   outline: none;
@@ -129,7 +142,7 @@ h1 {
 .search-button {
   padding: 10px 20px;
   font-size: 16px;
-  border: 1px solid #cccccc42;
+  border: 1px solid #cccccc23;
   border-left: none;
   border-radius: 0 0 20px 0;
   background-color: hsl(209, 71%, 43%);
@@ -148,7 +161,7 @@ h1 {
   margin-top: 20px;
   gap: 40px;
   margin-bottom: 100px;
-  width: 600px;
+  width: 700px;
 }
 
 .icon-links a img {
@@ -166,5 +179,4 @@ h1 {
   color: white;
   cursor: pointer;
 }
-
 </style>
