@@ -41,26 +41,36 @@
         <p><em>- {{ quote.author }}</em></p>
       </div>
     </div>
-    <div class="menu-icon" @click="toggleMenu">
-      <img src="..\assets\images\menu-icon.png" alt="Menu">
+    <div v-if="!newsLoading" class="news-info">
+      <h2>Latest News</h2>
+      <ul>
+        <li v-for="(article, index) in articles" :key="index">
+          <h3>{{ article.title }}</h3>
+          <p>{{ article.description }}</p>
+          <a :href="article.url" target="_blank">Read more</a>
+        </li>
+      </ul>
     </div>
-    <div v-if="isMenuOpen" class="side-menu">
-      <div class="side-menu-header">
-        <h2>Weather Information</h2>
-        <span @click="toggleMenu" class="close-button">&times;</span>
-      </div>
-      <div class="weather-info">
-        <h3>New York</h3>
-        <p>Temperature: 15°C</p>
-        <p>Condition: Sunny</p>
-        <h3>London</h3>
-        <p>Temperature: 10°C</p>
-        <p>Condition: Cloudy</p>
-        <h3>Tokyo</h3>
-        <p>Temperature: 20°C</p>
-        <p>Condition: Rainy</p>
-      </div>
+    <div v-else class="loading-message">Loading news...</div>
+  </div>
+  <div class="menu-icon" @click="toggleMenu">
+    <img src="..\assets\images\menu-icon.png" alt="Menu">
+  </div>
+  <div v-if="isMenuOpen" class="side-menu">
+    <div class="side-menu-header">
+      <h2>Latest News</h2>
+      <span @click="toggleMenu" class="close-button">&times;</span>
     </div>
+    <div v-if="!newsLoading" class="news-info">
+      <ul>
+        <li v-for="(article, index) in articles" :key="index">
+          <h3>{{ article.title }}</h3>
+          <p>{{ article.description }}</p>
+          <a :href="article.url" target="_blank">Read more</a>
+        </li>
+      </ul>
+    </div>
+    <div v-else class="loading-message">Loading news...</div>
   </div>
 </template>
 
@@ -73,6 +83,8 @@ const time = ref('');
 const date = ref('');
 const greeting = ref('');
 const isMenuOpen = ref(false);
+const articles = ref([]);
+const newsLoading = ref(true);
 const quote = ref({ content: '', author: '' });
 
 const updateTime = () => {
@@ -99,6 +111,22 @@ const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value;
 };
 
+const fetchNews = async () => {
+  try {
+    const response = await axios.get('https://newsapi.org/v2/top-headlines', {
+      params: {
+        country: 'us', // Change the country code as per your requirement
+        apiKey: 'd8339343ec52462f836cb8cd0b45e9ce' // Replace with your actual API key
+      }
+    });
+    articles.value = response.data.articles;
+    newsLoading.value = false;
+  } catch (error) {
+    console.error('Error fetching news:', error);
+    newsLoading.value = false;
+  }
+};
+
 const fetchQuote = async () => {
   try {
     const response = await axios.get('https://api.quotable.io/random');
@@ -112,6 +140,7 @@ onMounted(() => {
   updateTime();
   setInterval(updateTime, 1000);
   fetchQuote();
+  fetchNews();
 });
 </script>
 
@@ -232,8 +261,9 @@ h1 {
   position: absolute;
   top: 0;
   right: 0;
-  width: 500px;
-  height: 100%;
+  width: 700px;
+  max-height: calc(100vh); /* 40px für den Abstand des Headers */
+  overflow-y: auto; /* Falls die Höhe des Inhalts die maximale Höhe überschreitet */
   background-color: rgba(0, 0, 0, 0.8);
   color: white;
   z-index: 3;
@@ -254,16 +284,22 @@ h1 {
   cursor: pointer;
 }
 
-.weather-info {
+.news-info {
   margin-top: 20px;
 }
 
-.weather-info h3 {
+.news-info h3 {
+  font-size: 22px;
   margin: 10px 0 5px;
 }
 
-.weather-info p {
+.news-info p {
   margin: 5px 0;
+}
+
+.news-info a {
+  color: #005bb5;
+  margin: 10px 0 5px;
 }
 
 .quote {
