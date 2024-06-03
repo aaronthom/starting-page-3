@@ -5,23 +5,32 @@
     </video>
     <div class="content">
       <div class="clock">{{ time }}</div>
-      <h1 v-if="greeting === 'morning'">Good morning, Aaron!</h1>
-      <h1 v-if="greeting === 'afternoon'">Good afternoon, Aaron!</h1>
-      <h1 v-if="greeting === 'evening'">Good evening, Aaron!</h1>
+      <h1 v-if="greeting === 'morning'">"Good morning!"</h1>
+      <h1 v-if="greeting === 'afternoon'">"Good afternoon!"</h1>
+      <h1 v-if="greeting === 'evening'">"Good evening!"</h1>
       <form class="search-form" @submit.prevent="searchGoogle">
         <input type="text" v-model="query" placeholder="Search Google..." class="search-input" />
         <button type="submit" class="search-button">Search</button>
       </form>
       <div class="icon-links">
-        <a href="https://www.youtube.com" target="_blank"> 
-          YouTube
+        <a href="https://www.notion.so" target="_blank">
+          <img src="..\assets\images\notion-logo-1000x1000.png">
+        </a>
+        <a href="https://www.github.com" target="_blank">
+          <img src="..\assets\images\github-logo-1000x1000.png">
         </a>
         <a href="https://www.netflix.com" target="_blank">
-          Netflix
+          <img src="..\assets\images\netflix-logo-1000x1000.png">
         </a>
+        <a href="https://www.youtube.com" target="_blank">
+          <img src="..\assets\images\youtube-logo-1000x1000.png">
+        </a>
+
         <a href="https://www.amazon.com" target="_blank">
-          Amazon
+          <img src="..\assets\images\amazon-logo-1000x1000.png">
         </a>
+
+
       </div>
     </div>
   </div>
@@ -138,7 +147,17 @@ h1 {
   justify-content: center;
   margin-top: 20px;
   gap: 40px;
-  margin-bottom: 200px;
+  margin-bottom: 100px;
+  width: 600px;
+}
+
+.icon-links a img {
+  border-radius: 60px;
+}
+
+.icon-links a img:hover {
+  background-color: #cfd3d827;
+  transition: all 200ms ease-in-out;
 }
 
 .icon {
@@ -148,7 +167,4 @@ h1 {
   cursor: pointer;
 }
 
-.icon:hover {
-  color: #ccc;
-}
 </style>
