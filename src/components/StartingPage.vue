@@ -36,17 +36,44 @@
           <img src="..\assets\images\amazon-logo-1000x1000.png">
         </a>
       </div>
+      <div class="quote">
+        <p>{{ quote.content }}</p>
+        <p><em>- {{ quote.author }}</em></p>
+      </div>
+    </div>
+    <div class="menu-icon" @click="toggleMenu">
+      <img src="..\assets\images\menu-icon.png" alt="Menu">
+    </div>
+    <div v-if="isMenuOpen" class="side-menu">
+      <div class="side-menu-header">
+        <h2>Weather Information</h2>
+        <span @click="toggleMenu" class="close-button">&times;</span>
+      </div>
+      <div class="weather-info">
+        <h3>New York</h3>
+        <p>Temperature: 15°C</p>
+        <p>Condition: Sunny</p>
+        <h3>London</h3>
+        <p>Temperature: 10°C</p>
+        <p>Condition: Cloudy</p>
+        <h3>Tokyo</h3>
+        <p>Temperature: 20°C</p>
+        <p>Condition: Rainy</p>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import axios from 'axios';
 
 const query = ref('');
 const time = ref('');
 const date = ref('');
 const greeting = ref('');
+const isMenuOpen = ref(false);
+const quote = ref({ content: '', author: '' });
 
 const updateTime = () => {
   const now = new Date();
@@ -68,9 +95,23 @@ const searchGoogle = () => {
   window.location.href = searchUrl;
 };
 
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value;
+};
+
+const fetchQuote = async () => {
+  try {
+    const response = await axios.get('https://api.quotable.io/random');
+    quote.value = response.data;
+  } catch (error) {
+    console.error('Error fetching quote:', error);
+  }
+};
+
 onMounted(() => {
   updateTime();
   setInterval(updateTime, 1000);
+  fetchQuote();
 });
 </script>
 
@@ -100,6 +141,7 @@ onMounted(() => {
   align-items: center;
   height: 100%;
   color: white;
+  margin-top: 100px;
 }
 
 .date {
@@ -160,7 +202,7 @@ h1 {
   justify-content: center;
   margin-top: 20px;
   gap: 40px;
-  margin-bottom: 100px;
+  margin-bottom: 0px;
   width: 700px;
 }
 
@@ -173,10 +215,66 @@ h1 {
   transition: all 200ms ease-in-out;
 }
 
-.icon {
-  font-size: 30px;
-  margin: 0 10px;
-  color: white;
+.menu-icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 2;
   cursor: pointer;
+}
+
+.menu-icon img {
+  width: 30px;
+  height: 30px;
+}
+
+.side-menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 500px;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.side-menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-button {
+  margin-top: -24px;
+  font-size: 46px;
+  cursor: pointer;
+}
+
+.weather-info {
+  margin-top: 20px;
+}
+
+.weather-info h3 {
+  margin: 10px 0 5px;
+}
+
+.weather-info p {
+  margin: 5px 0;
+}
+
+.quote {
+  margin-top: 200px;
+  text-align: center;
+  font-size: 18px;
+  font-family: 'Georgia', serif;
+  font-style: italic;
+}
+
+.quote p {
+  margin: 10px 0;
 }
 </style>
