@@ -35,6 +35,9 @@
         <a href="https://www.amazon.com" target="_blank">
           <img src="..\assets\images\amazon-logo-1000x1000.png">
         </a>
+        <a href="https://www.google.com/intl/de/gmail/about/" target="_blank">
+          <img src="..\assets\images\gmail-logo-1000x1000.png">
+        </a>
       </div>
       <div class="quote">
         <p>{{ quote.content }}</p>
